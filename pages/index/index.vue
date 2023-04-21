@@ -1,9 +1,14 @@
 <template>
 	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view class="text-area">
-			<text class="title">{{title}}</text>
+		<!-- 第一页 -->
+		
+		<view class="page-one">
+			<view class="bar">
+				<img src="../../static/logo.png" alt="">
+				<text class="title">{{title}}</text>
+			</view>
 		</view>
+		
 	</view>
 </template>
 
@@ -11,42 +16,36 @@
 	export default {
 		data() {
 			return {
-				title: 'Hello'
+				title:'中国非物质文化遗产网·中国非物质文化遗产数字博物馆',
+				
 			}
 		},
-		onLoad() {
-
-		},
+		onLoad() {},
 		methods: {
 
 		}
 	}
 </script>
 
-<style>
+<style lang="less" scoped>
 	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
+		width: 100%;
 	}
-
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin-top: 200rpx;
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom: 50rpx;
+	// 第一页
+	.page-one{
+		.bar{
+			padding: 10rpx 50rpx;
+			width: 100%;
+			color: #fff;
+			background-color: rgba(179, 184, 188, .8);
+			display: flex;
+			align-items: center;
+			
+			.title{
+				font-size: 14rpx;
+				margin-left: 16rpx;
+			}
+		}
 	}
-
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
-
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
-	}
+	
 </style>

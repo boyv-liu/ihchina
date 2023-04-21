@@ -14,4 +14,12 @@
 
 <style>
 	/*每个页面公共css */
+	@import url('./font.scss');
+	view{
+		font-size: 12rpx;
+		color: #333;
+		font-family: 'fzqkbysjw';
+	}
+		
+	
 </style>
