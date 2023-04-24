@@ -16,10 +16,13 @@
 	/*每个页面公共css */
 	@import url('./font.scss');
 	view{
-		font-size: 12rpx;
+		font-size: 32rpx;
 		color: #333;
 		font-family: 'fzqkbysjw';
 	}
-		
-	
+	i{
+		font-weight: 600;
+		color: #fff;
+	}
+
 </style>

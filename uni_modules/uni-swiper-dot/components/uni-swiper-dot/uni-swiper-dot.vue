@@ -8,12 +8,12 @@
 		</view>
 		<view v-if="mode === 'dot'" :style="{'bottom':dots.bottom + 'px'}" class="uni-swiper__dots-box" key='dot'>
 			<view v-for="(item,index) in info" @click="clickItem(index)" :style="{
-        'width': dots.width + 'px','height':dots.height +'px' ,'background-color':index !== current?dots.backgroundColor:dots.selectedBackgroundColor,'border':index !==current ? dots.border:dots.selectedBorder}"
+        'width': dots.width + 'px','height':dots.height +'px' ,'background-color':index !== current?dots.backgroundColor:dots.selectedBackgroundColor,'border':index !==current ? dots.border:dots.selectedBorder,'background-position': 'top right',}"
 			 :key="index" class="uni-swiper__dots-item" />
 		</view>
 		<view v-if="mode === 'round'" :style="{'bottom':dots.bottom + 'px'}" class="uni-swiper__dots-box" key='round'>
-			<view v-for="(item,index) in info" @click="clickItem(index)" :class="[index === current&&'uni-swiper__dots-long']" :style="{
-		    'width':(index === current? dots.width*3:dots.width ) + 'px','height':dots.height +'px' ,'background-color':index !== current?dots.backgroundColor:dots.selectedBackgroundColor,'border':index !==current ? dots.border:dots.selectedBorder}"
+			<view v-for="(item,index) in info" @click="clickItem(index)" :class="[index == current&&'uni-swiper__dots-long']" :style="{
+		    'width':(index === current? dots.width:dots.width ) + 'px','height':dots.height +'px' ,}"
 			 :key="index" class="uni-swiper__dots-item " />
 		</view>
 		<view v-if="mode === 'nav'" key='nav' :style="{'background-color':dotsStyles.backgroundColor,'bottom':'0'}" class="uni-swiper__dots-box uni-swiper__dots-nav">
@@ -79,14 +79,14 @@
 		data() {
 			return {
 				dots: {
-					width: 6,
-					height: 6,
+					width: 30,
+					height: 30,
 					bottom: 10,
 					color: '#fff',
-					backgroundColor: 'rgba(0, 0, 0, .3)',
-					border: '1px rgba(0, 0, 0, .3) solid',
-					selectedBackgroundColor: '#333',
-					selectedBorder: '1px rgba(0, 0, 0, .9) solid'
+					// backgroundColor: 'rgba(0, 0, 0, .3)',
+					// border: '1px rgba(0, 0, 0, .3) solid',
+					// selectedBackgroundColor: '#333',
+					// selectedBorder: '1px rgba(0, 0, 0, .9) solid'
 				}
 			}
 		},
@@ -146,10 +146,12 @@
 	}
 
 	.uni-swiper__dots-item {
-		width: 8px;
+		width: 20rpx;
+		height: 20rpx;
 		border-radius: 100px;
 		margin-left: 6px;
-		background-color: rgba(0, 0, 0, 0.4);
+		background: url('./swiper-dot.png') no-repeat top left;
+		// background-color: rgba(0, 0, 0, 0.4);
 		/* #ifndef APP-NVUE */
 		cursor: pointer;
 		/* #endif */
@@ -171,7 +173,8 @@
 	}
 
 	.uni-swiper__dots-long {
-		border-radius: 50px;
+		// border-radius: 50px;
+		background: url('./swiper-dot.png') no-repeat top right;
 	}
 
 	.uni-swiper__dots-bar {
