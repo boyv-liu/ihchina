@@ -1,4 +1,8 @@
 import App from './App'
+import 'fullpage.js/vendors/scrolloverflow'
+import VueFullPage from 'vue-fullpage.js'
+
+Vue.use(VueFullPage)
 
 // #ifndef VUE3
 import Vue from 'vue'

@@ -1,79 +1,115 @@
 <template>
 	<view class="content">
-		<!-- 第一页 -->
-		<view class="page-one">
-			<view class="fixed-box">
-				<!-- 导航 -->
-				<view class="bar">
-					<img src="@/static/logo.png" alt="">
-					<view class="head">
-						<text class="title">{{title}}</text>
-						<!-- icons -->
-						<view class="icons">
-							<i class="iconfont icon-31sousuo"></i>
-							<i class="iconfont icon-weixin">
-								<img src="@/static/code.png" mode="center" style="width: 280rpx;height: 280rpx;" alt="">
-							</i>
-							<i class="iconfont icon-weibo"></i>
+		<full-page :options="options">
+			<!-- 第一页 -->
+			<div class="section">
+				<view class="page-one">
+					<view class="fixed-box">
+						<!-- 导航 -->
+						<view class="bar">
+							<img src="@/static/logo.png" alt="">
+							<view class="head">
+								<text class="title">{{title}}</text>
+								<!-- icons -->
+								<view class="icons">
+									<i class="iconfont icon-31sousuo"></i>
+									<i class="iconfont icon-weixin">
+										<img src="@/static/code.png" mode="center" style="width: 280rpx;height: 280rpx;" alt="">
+									</i>
+									<i class="iconfont icon-weibo"></i>
+								</view>
+								<text>{{showDate}}</text>
+							</view>
 						</view>
-						<text>{{showDate}}</text>
+						<!-- tabs -->
+						<view class="tab-box">
+							<v-tabs v-model="activeMenu" :scroll="false" :tabs="tabs" @change="changeTab"></v-tabs>
+						</view>
+					</view>
+					
+					<!-- 轮播图 -->
+					<uni-swiper-dot @clickItem="clickSwiper" class="swiper" :info="swiperInfo" :current="current" field="content" mode="round">
+						<swiper class="swiper-box" @change="change" :autoplay="true" :circular="true" :current="current">
+							<swiper-item v-for="(item ,index) in swiperInfo" :key="index">
+								<view class="swiper-item" :class="'swiper-item' + index">
+									<img mode="scaleToFill" :src="getSrc(index)" alt="" lazy-load draggable="false">
+								</view>
+							</swiper-item>
+						</swiper>
+					</uni-swiper-dot>
+					
+				</view>
+				
+			</div>
+			<!-- 第二页 -->
+			<div class="section">
+			   <view class="page-two">
+				<view class="lines">
+					<img :src=" '/static/c' + item + '.png' " alt="" mode="scaleToFill" class="line" v-for="item in lines">
+				</view>
+				<view class="head-title">
+					<view class="icon-img before-img"></view>
+					<text class="title">国家级非物质文化遗产代表性项目名录</text>
+					<view class="icon-img after-img"></view>
+				</view>
+				<!-- 项目明细 -->
+				<view class="product">
+					<view class="item" v-for="(item,index) in productList" :style="{'top': item.top, 'marginLeft': item.left, 'background': item.background,'backgroundSize': 'contain'}">
+						<img :src=" '/static/b' + index + '-1.png' " alt="" >
+						<view class="note">{{item.name}}</view>
 					</view>
 				</view>
-				<!-- tabs -->
-				<view class="tab-box">
-					<v-tabs v-model="activeMenu" :scroll="false" :tabs="tabs" @change="changeTab"></v-tabs>
+			   </view>   
+			</div>
+			<!-- 第三页 -->
+			<div class="section">
+				<view class="page-three">
+					<view class="title-item">中国入选联合国教科文组织非物质文化遗产</view>
+					<view class="title-item">名录（名册）项目</view>
+					<view class="title-item">共计43项</view>
 				</view>
-			</view>
-			
-			<!-- 轮播图 -->
-			<uni-swiper-dot @clickItem="clickSwiper" class="swiper" :info="swiperInfo" :current="current" field="content" mode="round">
-				<swiper class="swiper-box" @change="change" :autoplay="true" :circular="true" :current="current">
-					<swiper-item v-for="(item ,index) in swiperInfo" :key="index">
-						<view class="swiper-item" :class="'swiper-item' + index">
-							<img mode="scaleToFill" :src="getSrc(index)" alt="" lazy-load draggable="false">
-						</view>
-					</swiper-item>
-				</swiper>
-			</uni-swiper-dot>
-	
-		</view>
-		<!-- 第二页 -->
-		<view class="page-two">
-			<view class="lines">
-				<img :src=" '/static/c' + item + '.png' " alt="" mode="scaleToFill" class="line" v-for="item in lines">
-			</view>
-			<view class="left">
-				<view class="icon-img before-img"></view>
-				<text class="title">国家级非物质文化遗产代表性项目名录</text>
-				<view class="icon-img after-img"></view>
-			</view>
-			<!-- 项目明细 -->
-			<view class="product">
-				<view class="item" v-for="(item,index) in productList" :style="{'top': item.top, 'marginLeft': item.left, 'background': item.background,'backgroundSize': 'contain'}">
-					<img :src=" '/static/b' + index + '-1.png' " alt="" >
-					<view class="note">{{item.name}}</view>
+			</div>
+			<!-- 第四页 -->
+			<div class="section">
+				<view class="page-four">
+					<img src="/static/page4.png"  mode="scaleToFill" alt="" style="height: 100%;width: 100%;" >
 				</view>
-			</view>
-		</view>
-		<!-- 第三页 -->
-		<view class="page-three">
-			<view class="title-item">中国入选联合国教科文组织非物质文化遗产</view>
-			<view class="title-item">名录（名册）项目</view>
-			<view class="title-item">共计43项</view>
-		</view>
-		<!-- 第四页 -->
-		<view class="page-four">
-			<img src="/static/page4.png"  mode="scaleToFill" alt="" style="height: 100%;width: 100%;" >
-		</view>
+			</div>
+			<!-- 第五页 -->
+			<div class="section">
+				<view class="page-five">
+					<view class="head-title">
+						<view class="icon-img-row left-img"></view>
+						<text class="title">非物质文化遗产地图</text>
+						<view class="icon-img-row right-img"></view>
+					</view>
+					<view class="bottom">
+						<view class="china-map" id="china-map" style="width: 850px;height: 641px;" ref="charts"></view>
+						<img style="width: 800rpx;height: 1000rpx;" src="/static/page5info.png" alt="">
+					</view>
+					
+				</view>
+			</div>
+		</full-page>
 	</view>
 </template>
 
 <script>
 	import solarlunar from 'solarlunar'
+	import * as echarts from "echarts"
+	import chinaMap from '@/static/map/china-area.json'
+
 
 	export default {
 		data() {
 			return {
+				options: {
+					licenseKey: "OPEN-SOURCE-GPLV3-LICENSE",
+					//是否显示导航，默认为false
+					navigation: true,
+					//为每个section设置背景色
+					sectionsColor: [],
+				},
 				title:'中国非物质文化遗产网·中国非物质文化遗产数字博物馆',
 				showDate:'', // 日期
 				activeMenu: 0,
@@ -99,8 +135,11 @@
 		mounted() {
 			// 日期
 			this.getDate()
+			// 地图
+			this.initMap()
 		},
 		methods: {
+			// 日期
 			getDate(){
 				const nowDate = new Date()
 				const data = solarlunar.solar2lunar(nowDate.getFullYear(), nowDate.getMonth() + 1, nowDate.getDate())
@@ -111,6 +150,78 @@
 					console.log('日期转化出错')
 					this.showDate = ''
 				}
+			},
+			// 地图
+			initMap(){
+				// const charts = echarts.init(this.$refs["charts"])
+				var charts = echarts.init(document.getElementById('china-map'));
+				const option = {
+					// 背景颜色
+					// backgroundColor: "rgba(128, 128, 128, 0)",
+					// 提示浮窗样式
+					tooltip: {
+						show: true,
+						trigger: 'item', //坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用
+						// axisPointer: {// 坐标轴指示器，坐标轴触发有效
+						//     type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+						// },
+						alwaysShowContent: false,
+						backgroundColor: "#b0a18a",
+						borderColor: "#b0a18a",
+						triggerOn: "mousemove",
+						enterable: true, //鼠标是否可进入提示框浮层中
+						textStyle: {
+							fontSize: "12",
+							overflow: "break",
+							color: "#fff",
+						},
+						formatter: function (params) {
+							let str = '';
+							str = `<div> ` + params.name + `:` + params.value + `</div>`                   
+							return str
+						},
+					},
+					// 地图配置
+					geo: {
+						map: "china",
+						zoom: 1.8, //视觉比例大小,1.2即为原有大小的1.2倍
+						roam: false, //是否开启鼠标缩放和平移漫游。默认不开启。可以不用设置,如果只想要开启缩放或者平移，可以设置成 'scale' 或者 'move'。
+						top: '30%',
+						left:'25%',
+						label: {
+							// 通常状态下的样式
+							normal: {
+								show: true,
+								textStyle: {
+									color: "#fff",
+								},
+								fontSize: '9'
+							},
+							// 鼠标放上去的样式
+							emphasis: {
+								textStyle: {
+									color: "#fff",
+								},
+							},
+						},
+						// 地图区域的样式设置
+						itemStyle: {
+							normal: {
+								areaColor: "rgba(128, 128, 128, 0)",
+								borderColor: "#887d6a",
+								borderWidth: 0,
+							},
+							
+							// 鼠标放上去高亮的样式
+							emphasis: {
+								areaColor: "rgba(128, 128, 128, 0)",
+								borderWidth: 0,
+							},
+						},
+					},
+				}
+				echarts.registerMap("china", chinaMap )
+				charts.setOption(option)
 			},
 			// tab
 			changeTab(index) {
@@ -231,14 +342,15 @@
 			}
 			
 		}
-		.left{
+		// 标题
+		.head-title{
 			.title{
 				position: absolute;
 				top: 18%;
 				color: #fff;
 				margin-left: 6.3%;
-				writing-mode: vertical-rl;
 				font-size: 60rpx;
+				writing-mode: vertical-rl;
 			}
 			.icon-img{
 				position: absolute;
@@ -246,6 +358,7 @@
 				width: 70rpx;
 				height: 80rpx;
 			}
+	
 			.before-img{
 				top: 12%;
 				background: url('/static/kuohao.png') no-repeat top left;
@@ -277,7 +390,7 @@
 	// 第三页
 	.page-three{
 		height: 100vh;
-		background: url('/static/page3bg.jpeg') no-repeat left top;
+		background: url('/static/page3bg.jpeg') no-repeat right top;
 		background-size: cover;
 		padding-top: 300rpx;
 		.title-item{
@@ -292,4 +405,51 @@
 	.page-four{
 		height: 100vh;
 	}
+	
+	// 第五页
+	.page-five{
+		position: relative;
+		padding: 4% 6% 2% 6%;
+		box-sizing: border-box;
+		height: 100vh;
+		view{
+			color: #fff;
+		}
+		background: url('/static/page5bg.jpeg') no-repeat top right;
+		
+		// 地图
+		.china-map{
+			background: url('/static/map.png') no-repeat;
+		}
+		// 标题
+		.head-title{
+			text-align: center;
+			position: relative;
+			font-size: 60rpx;
+			padding-bottom: 20rpx;
+			.icon-img-row{
+				position: absolute;
+				width: 45rpx;
+				height: 70rpx;
+			}
+			.left-img{
+				left: 32%;
+				background: url('/static/kuohaorow.png') no-repeat top left;
+			}
+			.right-img{
+				right: 32%;
+				top: 0;
+				background: url('/static/kuohaorow.png') no-repeat top right;
+			}
+		}
+		
+		.bottom{
+			height: 80vh;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+		
+	}
+	
 </style>
