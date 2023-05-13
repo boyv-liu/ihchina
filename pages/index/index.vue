@@ -54,7 +54,7 @@
 				</view>
 				<!-- 项目明细 -->
 				<view class="product">
-					<view class="item" v-for="(item,index) in productList" :style="{'top': item.top, 'marginLeft': item.left, 'background': item.background,'backgroundSize': 'contain'}">
+					<view class="item" @click="toDetail(index)" v-for="(item,index) in productList" :style="{'top': item.top, 'marginLeft': item.left, 'background': item.background,'backgroundSize': 'contain'}">
 						<img :src=" '/static/b' + index + '-1.png' " alt="" >
 						<view class="note">{{item.name}}</view>
 					</view>
@@ -90,6 +90,58 @@
 					
 				</view>
 			</div>
+			<!-- 第六页 -->
+			<div class="section">
+				<view class="page-six">
+					<image :src="'/static/page6-'+index+'.jpeg'" alt="" v-show="active == index"  v-for="(item,index) in characterList"  mode="aspectFill" style="width: 60%;height: 100%;"></image>
+					<view class="right-liens">
+						<view class="title">人物</view>
+						<view class="line"  v-for="(item,index) in characterList" @mouseenter="active = index" @mouseout="active = index">
+							<a :href="item.link" target="_blank">{{item.name}}</a>
+						</view>
+					</view>
+				</view>
+			</div>
+			<!-- 第七页 -->
+			<div class="section">
+				<view class="page-seven">	
+					<img src="/static/page7-left.png"  alt="" :class="{'left':true,'moveBottom':showAnimation,'moveTop':!showAnimation}" />
+					<img src="/static/page7-right.png" alt="" :class="{'right':true,'moveBottom':!showAnimation,'moveTop':showAnimation}">
+					<view class="left-info info">
+						<view class="title">传统工艺振兴计划</view>
+						<view>
+							为落实党的十八届五中全会关于“构建中华优秀传统文化传承体系，加强文化遗产保护，振兴传统工艺”和《中华人民共和国国民经济和社会发展第十三个五年规划纲要》关于“制定实施中国传统工艺振兴计划”的要求，促进中国传统工艺的传承与振兴，文化部、工业和信息化部、财政部联合制定了《中国传统工艺振兴计划》，于2017年3月正式出台。
+						</view>
+						<a href="https://www.ihchina.cn/rejuvenation.html" target="_blank">查看更多</a>
+					</view>
+					<view class="right-info info">
+						<view class="title">中国非物质文化遗产传承人研修培训计划</view>
+						<view>
+							自2015年“中国非物质文化遗产传承人群研修研习培训计划”实施以来，完成了“十三五”培训传承人群10万人次的目标任务，形成了较为明确的教学体系、工作规范和管理方式，有效调动了院校参与非物质文化遗产（以下简称“非遗”）保护工作，为非遗保护引入了重要力量；扩大了非遗传承人才队伍，促进了非遗保护理念的社会传播；提高了传统工艺设计制作水平，改善了一批项目保护传承情况；拓展了非遗保护传承的手段和方式，推动了一批示范性项目和探索性项目。同时，在振兴传统工艺、促进曲艺传承发展、助力脱贫攻坚等方面发挥了积极作用，社会影响力不断增强。“中国非物质文化遗产传承人群研修研习培训计划”已经成为非遗保护事业的一项基础性、战略性工作。
+						</view>
+						<a href="https://www.ihchina.cn/train.html" target="_blank">查看更多</a>
+					</view>
+				</view>
+			</div>
+			<!-- 第八页 -->
+			<div class="section">
+				<view class="page-eight">	
+					<view class="left">
+						<img @click="toMore" src="/static/page8-title.png" style="width: 40%;height: 70%;margin-top: 70%;" alt="">
+					</view>
+					<view class="accordion">
+						<view class="item" v-for="(item,index) in accordionList" @mouseenter="handleEnter(index)" @mouseout="handleOut(index)" :style="{'background':item.background,'flex':item.isHover}">
+							<a :href="item.link" target="_blank">{{item.name}}</a> 
+						</view>
+					</view>
+				</view>
+			</div>
+			<!-- 第九页 -->
+			<div class="section">
+				<view class="page-nine">
+					<img src="/static/page9bg.png"  mode="scaleToFill" alt="" style="height: 100%;width: 100%;" >
+				</view>
+			</div>
 		</full-page>
 	</view>
 </template>
@@ -109,6 +161,7 @@
 					navigation: true,
 					//为每个section设置背景色
 					sectionsColor: [],
+					onLeave:this.pageLeave,
 				},
 				title:'中国非物质文化遗产网·中国非物质文化遗产数字博物馆',
 				showDate:'', // 日期
@@ -128,6 +181,23 @@
 					{name:'【 传统技艺 】',top:'15%',left:'70%',background:'url("/static/b7.png") no-repeat top left'},
 					{name:'【 传统医药 】',top:'45%',left:'75%',background:'url("/static/b8.png") no-repeat top left'},
 					{name:'【 民俗 】',top:'35%',left:'85%',background:'url("/static/b9.png") no-repeat top left'},
+				],
+				characterList:[
+					{name:'张树萍：初心不改，戏大于天',link:'https://www.ihchina.cn/character_detail/8578.html'},
+					{name:'刘兰芳：从艺60周年回眸',link:'https://www.ihchina.cn/character_detail/18817.html'},
+					{name:'刘魁立：行走田野 问俗追风',link:'https://www.ihchina.cn/character_detail/18671.html'},
+					{name:'姚惠芬：走进威尼斯双年展的中国苏绣大师',link:'https://www.ihchina.cn/character_detail/8649.html'},
+					{name:'尚长荣：“老戏骨”的创新之路',link:'https://www.ihchina.cn/character_detail/8661.html'},
+					{name:'刘锡诚：心无旁骛的民间文学守望者',link:'https://www.ihchina.cn/character_detail/8724.html'},
+				],
+				active:0, // page6图片的显示
+				showAnimation:false, // page7的动画显示
+				accordionList:[
+					{name:'宣纸传统制作技艺',link:'https://www.ihchina.cn/page_special.html',isHover:1,background:'url("/static/page8-0.jpeg") no-repeat center left 20%',link:'https://www.ihchina.cn/page_special.html'},
+					{name:'二十四节气',link:'https://www.ihchina.cn/solar_terms.html',isHover:3,background:'url("/static/page8-1.jpeg") no-repeat center left 20%',link:'https://www.ihchina.cn/solar_terms.html'},
+					{name:'太极拳',link:'https://www.ihchina.cn/tjq_home.html',isHover:1,background:'url("/static/page8-2.jpeg") no-repeat center left 20%',link:'https://www.ihchina.cn/tjq_home.html'},
+					{name:'文化和自然遗产日',link:'https://www.ihchina.cn/special2022.html',isHover:1,background:'url("/static/page8-3.jpeg") no-repeat center left 20%',link:'https://www.ihchina.cn/special2022.html'},
+					{name:'影音',link:'https://www.ihchina.cn/video.html',isHover:1,background:'url("/static/page8-4.jpeg") no-repeat center left 20%',link:'https://www.ihchina.cn/video.html'},
 				]
 			}
 		},
@@ -149,6 +219,21 @@
 				}else{
 					console.log('日期转化出错')
 					this.showDate = ''
+				}
+			},
+			// 代表
+			toDetail(index){
+				let url = 'https://www.ihchina.cn/project.html?tid=' + Number(index+1) +  '#sy_target1'
+				window.open(url)
+			},
+			// page滚动
+			pageLeave(index, nextIndex, direction){
+				// console.log(nextIndex.index)
+				if(nextIndex.index == 6){
+					// 加载动画
+					this.showAnimation = true
+				}else{
+					this.showAnimation = false
 				}
 			},
 			// 地图
@@ -226,6 +311,31 @@
 			// tab
 			changeTab(index) {
 			  console.log('当前选中的项：' + index)
+			  switch(index){
+				case 1:
+					window.open('https://www.ihchina.cn/jigou')
+				break
+				case 2:
+					window.open('https://www.ihchina.cn/zhengce')
+				break
+				case 3:
+					window.open('https://www.ihchina.cn/zixun')
+				break
+				case 4:
+					window.open('https://www.ihchina.cn/project.html')
+				break
+				case 5:
+					window.open('https://www.ihchina.cn/ziyuan')
+				break
+				case 6:
+					window.open('https://www.ihchina.cn/xueshu')
+				break
+				case 7:
+					window.open('https://www.ihchina.cn/shenbaozhinan.html')
+				break
+			  }
+			  
+			  
 			},
 			
 			// swiper 
@@ -237,8 +347,26 @@
 			},
 			clickSwiper(val){
 				this.current = val
-			}
-		
+			},
+			// 查看更多
+			toMore(){
+				window.open('https://www.ihchina.cn/zhanlan.html')
+			},
+			// 手风琴
+			handleEnter(index){
+				this.accordionList.forEach((item,i)=>{
+					if(index == i){
+						item.isHover = 3
+					}else{
+						item.isHover = 1
+					}
+				})
+			},
+			handleOut(index){
+				this.accordionList.forEach((item,i)=>{
+					item.isHover = 1
+				})
+			},
 		}
 	}
 </script>
@@ -452,4 +580,188 @@
 		
 	}
 	
+	// 第六页
+	.page-six{
+		display: flex;
+		height: 100vh;
+		box-sizing: border-box;
+		background: url('/static/page6bg.jpeg') no-repeat top right 40%;
+		background-size: cover;
+
+		.right-liens{
+			width: 40%;
+			height: 100%;
+			padding: 0 150rpx;
+			display: flex;
+			align-items: center;
+			
+			.title{
+				position: relative;
+				font-size: 60rpx;
+				padding: 0 100rpx;
+				writing-mode: vertical-rl;
+				
+				&:before{
+					content: '';
+					position: absolute;
+					top: -100rpx;
+					display: block;
+					width: 70rpx;
+					height: 80rpx;
+					background: url('/static/kuahaoblack.png') no-repeat ;
+				}
+				&:after{
+					content: '';
+					position: absolute;
+					bottom: -120rpx;
+					left: 96rpx;
+					display: block;
+					width: 70rpx;
+					height: 80rpx;
+					background: url('/static/kuahaoblack.png') no-repeat top right;
+				}
+			}
+		
+			.line{
+				height: 100%;
+				padding: 0 30rpx;
+				writing-mode: vertical-rl;
+				position: relative;
+				cursor: pointer;
+				
+				&:before{
+					content: '';
+					position: absolute;
+					right: 50%;
+					top: 0;
+					bottom: 0;
+					border-left: 1px solid #ccc;
+				}
+				&:hover a{
+					color: #f66;
+				}
+				&:hover &:before{
+					border-left: 1px solid #f66;
+				}
+					
+				a{
+					position: relative;
+					display: inline-block;
+					padding: 30rpx 0;
+					top: 20%;
+					background: url('/static/page6line.png') no-repeat;
+					background-size: cover;
+				}
+				
+				&:nth-child(odd) a{
+					top: 40%;
+				}
+				
+			}
+			
+		}
+	}
+	
+	// 第七页
+	.page-seven{
+		height: 100vh;
+		position: relative;
+		background: url('/static/page7bg.jpeg') no-repeat top left;
+		overflow: hidden;
+		.left{
+			position: relative;
+			width: 70%;
+			height: 60vh;
+			left: -6%;
+			top: -55vh;
+		}
+		.moveBottom{
+			transition: all 2s linear;
+			transform: translate(0,55vh);
+		}
+		.moveTop{
+			transition: all 2s linear;
+			transform: translate(0,-55vh);
+		}
+		.right{
+			position: absolute;
+			right: -15%;
+			bottom: -55vh;
+		}
+		.info{
+			position: absolute;
+			width: 40%;
+			.title{
+				text-indent: .5rem;
+				font-size: 50rpx;
+				padding-bottom: 50rpx;
+			}
+			view{
+				text-indent: .5rem;
+				color: #fff;
+				line-height: 45rpx;
+			}
+			a{
+				display: inline-block;
+				padding-top: 50rpx;
+				color: #fff;
+			}
+			
+		}
+		.left-info{
+			left: 100rpx;
+		}
+		.right-info{
+			right: 100rpx;
+			top: 400rpx;
+		}
+	
+	}
+	
+	// 第八页
+	.page-eight{
+		height: 100vh;
+		display: flex;
+		.left{
+			text-align: center;
+			width: 16%;
+			// height: 100vh;
+			background: url('/static/page8-left.jpeg') no-repeat center;
+			img:hover{
+				cursor: pointer;
+			}
+		}
+		.accordion{
+			flex: 1;
+			display: flex;
+			.item{
+				writing-mode: vertical-lr;
+				background-size: cover;
+				// flex: 1;
+				height: 100%;
+				padding-left: 50rpx;
+				text-align: center;
+				a{
+					font-size: 50rpx;
+					color: #fff;
+				}
+				&:hover{
+					cursor: pointer;
+				}
+				transition: all .5s linear;
+			}
+		}
+		
+	}
+	
+	// 第九页
+	.page-nine{
+		height: 100vh;
+	}
+	
+	a{
+		color: #333;
+		border-bottom: 0;
+		text-decoration: none;
+	}
 </style>
